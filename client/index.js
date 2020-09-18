@@ -1,11 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { HashRouter } from "react-router-dom";
 
-const Root = () => {
-  return <div>Lyrical</div>
-};
+import App from "./components/App";
 
-ReactDOM.render(
-  <Root />,
-  document.querySelector('#root')
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql",
+  cache: new InMemoryCache(),
+});
+
+const Root = () => (
+  <ApolloProvider client={client}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </ApolloProvider>
 );
+
+ReactDOM.render(<Root />, document.querySelector("#root"));
